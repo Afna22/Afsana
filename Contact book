@@ -1,0 +1,99 @@
+d = {"Afsana": {"name": "Afsana", "phone": [8606317804, 9207552138], "gmail": "ms.afna21@gmail.com"}}
+
+def search_contact():
+    query = input("Enter the name or phone number to search: ").lower()
+
+    found_contacts = []
+    for name, details in d.items():
+        if query in name.lower() or query in map(str, details["phone"]):
+            found_contacts.append((name, details))
+
+    if found_contacts:
+        print("\nSearch Results:")
+        for name, details in found_contacts:
+            print(f"{name}: {details}")
+    else:
+        print("\nNo matching contacts found.\n")
+
+print("1: Create")
+print("2: View")
+print("3: Update")
+print("4: Delete")
+print("5: Search")
+print("6: Exit")
+
+while True:
+    op = int(input("Enter an option: "))
+    if op == 6:
+        break
+    elif op not in [1, 2, 3, 4, 5]:
+        print("Choose the correct option")
+    else:
+        if op == 2:
+            vi = input("Enter the name of contact you want to view: ")
+            if vi in d.keys():
+                print(d[vi])
+            else:
+                print("User not found")
+        elif op == 4:
+            dele = input("Which name you want to delete: ")
+            if dele in d:
+                d.pop(dele)
+                print(d)
+            else:
+                print("User not found")
+        elif op == 3:
+            con = input("Which contact you want to update: ")
+            if con in d.keys():
+                print("1: Phone")
+                print("2: Gmail")
+                print("3: Name")
+                num = int(input("Which field you want to update: "))
+                if num == 1:
+                    print("1: Phone 1")
+                    print("2: Phone 2")
+                    print("3: Both")
+                    phn = int(input("Which phone number you want to update: "))
+                    if phn == 1:
+                        phne1 = int(input("Enter the new phone number: "))
+                        d[con]["phone"][0] = phne1
+                        print(d)
+                    elif phn == 2:
+                        phne2 = int(input("Enter the new phone number 2: "))
+                        d[con]["phone"][1] = phne2
+                        print(d)
+                    elif phn == 3:
+                        phne1 = int(input("Enter the phone number 1: "))
+                        phne2 = int(input("Enter the new phone number 2: "))
+                        d[con]["phone"] = [phne1, phne2]
+                        print(d)
+                    elif phn not in [1, 2, 3]:
+                        print("Choose the correct option")
+                elif num == 2:
+                    gm = input("Enter the new gmail id: ")
+                    d[con]["gmail"] = gm
+                    print(d)
+                elif num == 3:
+                    nn = input("Enter the new name: ")
+                    d[con]["name"] = nn
+                    d[nn] = d[con]
+                    del d[con]
+                    print(d)
+                else:
+                    print("Choose the correct option")
+            else:
+                print("User not found")
+        elif op == 1:
+            name = input("Enter the name: ")
+            if name not in d.keys():
+                phone1 = int(input("Enter the phone number 1: "))
+                phone2 = int(input("Enter the phone number 2: "))
+                gmail = input("Enter the gmail id: ")
+                d1 = {"name": name, "phone": [phone1, phone2], "gmail": gmail}
+                print(d1)
+                d[name] = d1
+                print(d)
+            else:
+                print("User already found")
+        elif op == 5:
+            search_contact()
